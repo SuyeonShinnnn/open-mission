@@ -7,7 +7,12 @@ class LottoInputView {
     }
 
     fun inputPurchaseType(): Int {
-        println("1. 수동 발급 | 2. 자동 발급");
+        println("\n1. 수동 발급 | 2. 자동 발급");
         return readLine()?.toIntOrNull() ?: 0;
+    }
+
+    fun inputManualLottoNumbers(count: Int): String {
+        print("\n${count}번째 로또 번호 입력: ");
+        return readLine() ?: "";
     }
 }
