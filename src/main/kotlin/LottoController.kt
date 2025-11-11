@@ -23,11 +23,16 @@ class LottoController() {
 
     fun manualIssue(purchaseAmount: Int) {
         var issuedLottoNumbers = mutableListOf<Lotto>();
-        for (i: Int in 1..purchaseAmount / 5000){
-            var inputLottoNumbers = inputView.inputManualLottoNumbers(i);
-            val parsedInputLottoNumbers = service.parseInput(inputLottoNumbers);
-
-            issuedLottoNumbers.add(parsedInputLottoNumbers);
+        var i = 1;
+        while (i <= purchaseAmount / 5000){
+            try{
+                var inputLottoNumbers = inputView.inputManualLottoNumbers(i);
+                val parsedInputLottoNumbers = service.parseInput(inputLottoNumbers);
+                issuedLottoNumbers.add(parsedInputLottoNumbers);
+                i++;
+            } catch (e: IllegalArgumentException) {
+                println(e.message);
+            }
         }
     }
 }

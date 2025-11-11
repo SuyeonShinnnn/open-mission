@@ -6,7 +6,6 @@ class LottoService {
             input.split(",")
                 .map { it.trim() }
                 .mapNotNull { it.toIntOrNull() }
-                .filter { it in 1..45 }
         );
     }
 }
