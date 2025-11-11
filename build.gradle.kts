@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "2.0.0"
+    application
 }
 
 group = "org.example"
@@ -10,7 +11,12 @@ repositories {
 }
 
 dependencies {
+    implementation(kotlin("stdlib"))
     testImplementation(kotlin("test"))
+}
+
+application {
+    mainClass.set("MainKt")
 }
 
 tasks.test {
