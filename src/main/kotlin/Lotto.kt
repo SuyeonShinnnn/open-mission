@@ -19,4 +19,8 @@ class Lotto {
             throw IllegalArgumentException("로또 번호는 1-45까지의 숫자만 입력 가능");
         }
     }
+
+    fun getNumbers(): List<Int> {
+        return numbers;
+    }
 }

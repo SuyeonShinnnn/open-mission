@@ -21,6 +21,7 @@ class LottoController() {
             println("자동 발급")
         }
         var winningNumber = service.generateWinningNumber();
+        var bonusNumer = service.generateBonusNumber(winningNumber);
     }
 
     fun manualIssue(purchaseAmount: Int): List<Lotto> {
