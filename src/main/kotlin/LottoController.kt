@@ -11,21 +11,23 @@ class LottoController() {
         outputView.welcomeMessageOutput();
         var purchaseAmount = inputView.inputPurchaseAmount();
         var purchaseType = inputView.inputPurchaseType();
+        var issuedLottoNumbers: List<Lotto>;
 
         if (purchaseType == 1) {
             println("\n** 로또 번호를 수동으로 발급합니다 **");
             println("번호를 입력해 주세요. (예: 1, 2, 3, 4, 5, 6)");
-            manualIssue(purchaseAmount);
+            issuedLottoNumbers = manualIssue(purchaseAmount);
         } else if (purchaseType == 2) {
             println("자동 발급")
         }
+        var winningNumber = service.generateWinningNumber();
     }
 
-    fun manualIssue(purchaseAmount: Int) {
+    fun manualIssue(purchaseAmount: Int): List<Lotto> {
         var issuedLottoNumbers = mutableListOf<Lotto>();
         var i = 1;
-        while (i <= purchaseAmount / 5000){
-            try{
+        while (i <= purchaseAmount / 5000) {
+            try {
                 var inputLottoNumbers = inputView.inputManualLottoNumbers(i);
                 val parsedInputLottoNumbers = service.parseInput(inputLottoNumbers);
                 issuedLottoNumbers.add(parsedInputLottoNumbers);
@@ -34,5 +36,6 @@ class LottoController() {
                 println(e.message);
             }
         }
+        return issuedLottoNumbers;
     }
 }

@@ -8,4 +8,8 @@ class LottoService {
                 .mapNotNull { it.toIntOrNull() }
         );
     }
+
+    fun generateWinningNumber() :Lotto {
+        return Lotto((1..45).shuffled().take(6).sorted());
+    }
 }
