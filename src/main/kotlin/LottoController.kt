@@ -1,7 +1,5 @@
 package org.example
 
-import jdk.jfr.DataAmount
-
 class LottoController() {
     private val service: LottoService = LottoService();
     private val outputView: LottoOutputView = LottoOutputView();
@@ -11,7 +9,7 @@ class LottoController() {
         outputView.welcomeMessageOutput();
         var purchaseAmount = inputView.inputPurchaseAmount();
         var purchaseType = inputView.inputPurchaseType();
-        var issuedLottoNumbers: List<Lotto>;
+        var issuedLottoNumbers: List<Lotto>? = null;
 
         if (purchaseType == 1) {
             println("\n** 로또 번호를 수동으로 발급합니다 **");
@@ -21,8 +19,13 @@ class LottoController() {
             println("자동 발급")
         }
         var winningNumber = service.generateWinningNumber();
-        var bonusNumer = service.generateBonusNumber(winningNumber);
-        outputView.outputWinningNumber(winningNumber, bonusNumer);
+        var bonusNumber = service.generateBonusNumber(winningNumber);
+        outputView.outputWinningNumber(winningNumber, bonusNumber);
+
+
+        if (issuedLottoNumbers != null) {
+            var result = service.matchNumbers(issuedLottoNumbers, winningNumber, bonusNumber)
+        }
     }
 
     fun manualIssue(purchaseAmount: Int): List<Lotto> {
