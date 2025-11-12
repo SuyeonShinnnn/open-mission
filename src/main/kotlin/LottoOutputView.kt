@@ -1,5 +1,8 @@
 package org.example
 
+import java.text.NumberFormat
+import java.util.*
+
 class LottoOutputView {
     fun welcomeMessageOutput() {
         println("=============================");
@@ -17,5 +20,19 @@ class LottoOutputView {
         println("\n\n보너스번호✨")
         println("$bonusNumber");
         println("=============================");
+    }
+
+    fun outputResult(result: Map<WinningRank, Int>) {
+        println("\n당첨 통계")
+        println("----------")
+
+        val formatter = NumberFormat.getNumberInstance(Locale.KOREA)
+        val sorted = result.toSortedMap(compareBy { it.ordinal })
+
+        for ((rank, count) in sorted) {
+            val bonusText = if (rank.bonus) ", 보너스 볼 일치" else ""
+            val rewardText = formatter.format(rank.reward)
+            println("${rank.matchCount}개 일치$bonusText (${rewardText}원) - ${count}개")
+        }
     }
 }

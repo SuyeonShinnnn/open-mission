@@ -24,7 +24,8 @@ class LottoController() {
 
 
         if (issuedLottoNumbers != null) {
-            var result = service.matchNumbers(issuedLottoNumbers, winningNumber, bonusNumber)
+            var result = service.matchNumbers(issuedLottoNumbers, winningNumber, bonusNumber);
+            outputView.outputResult(result);
         }
     }
 
