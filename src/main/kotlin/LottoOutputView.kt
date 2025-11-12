@@ -22,6 +22,13 @@ class LottoOutputView {
         println("=============================");
     }
 
+    fun outputIssuedLottoNumbers(numbers: List<Lotto>?) {
+        println("\n발급한 로또 번호");
+        if (numbers != null) {
+            numbers.forEach { numbers -> println("${numbers.getNumbers()}") }
+        };
+    }
+
     fun outputResult(result: Map<WinningRank, Int>) {
         println("\n당첨 통계")
         println("----------")

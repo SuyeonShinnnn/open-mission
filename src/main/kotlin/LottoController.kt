@@ -18,6 +18,7 @@ class LottoController() {
         } else if (purchaseType == 2) {
             issuedLottoNumbers = autoIssue(purchaseAmount);
         }
+        outputView.outputIssuedLottoNumbers(issuedLottoNumbers);
         var winningNumber = service.generateLottoNumbers();
         var bonusNumber = service.generateBonusNumber(winningNumber);
         outputView.outputWinningNumber(winningNumber, bonusNumber);
