@@ -12,14 +12,8 @@ class LottoOutputView {
     }
 
     fun outputWinningNumber(winningNumber: Lotto, bonusNumber: Int) {
-        println("\n=============================");
-        println("당첨번호🍀");
-        winningNumber.getNumbers().forEach { number ->
-            print("$number ")
-        }
-        println("\n\n보너스번호✨")
-        println("$bonusNumber");
-        println("=============================");
+        println("\n당첨번호🍀");
+        println("${winningNumber.getNumbers()} + $bonusNumber")
     }
 
     fun outputIssuedLottoNumbers(numbers: List<Lotto>?) {
