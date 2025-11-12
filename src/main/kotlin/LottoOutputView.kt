@@ -7,4 +7,15 @@ class LottoOutputView {
         println("=============================");
         println();
     }
+
+    fun outputWinningNumber(winningNumber: Lotto, bonusNumber: Int) {
+        println("\n=============================");
+        println("당첨번호🍀");
+        winningNumber.getNumbers().forEach { number ->
+            print("$number ")
+        }
+        println("\n\n보너스번호✨")
+        println("$bonusNumber");
+        println("=============================");
+    }
 }
