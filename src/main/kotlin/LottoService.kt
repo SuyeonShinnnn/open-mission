@@ -9,7 +9,7 @@ class LottoService {
         );
     }
 
-    fun generateWinningNumber(): Lotto {
+    fun generateLottoNumbers(): Lotto {
         return Lotto((1..45).shuffled().take(6).sorted());
     }
 
