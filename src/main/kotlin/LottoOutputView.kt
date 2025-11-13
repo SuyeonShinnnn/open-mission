@@ -30,9 +30,11 @@ class LottoOutputView {
         val formatter = NumberFormat.getNumberInstance(Locale.KOREA)
         val sorted = result.toSortedMap(compareBy { it.ordinal })
 
-        for ((rank, count) in sorted) {
+        for (rank in WinningRank.values().reversed()) {
+            val count = sorted.getOrDefault(rank, 0)
             val bonusText = if (rank.bonus) ", 보너스 볼 일치" else ""
             val rewardText = formatter.format(rank.reward)
+
             println("${rank.matchCount}개 일치$bonusText (${rewardText}원) - ${count}개")
         }
     }
