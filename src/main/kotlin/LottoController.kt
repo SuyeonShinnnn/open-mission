@@ -7,10 +7,13 @@ class LottoController() {
 
     fun runLotto() {
         outputView.welcomeMessageOutput();
+
         var purchaseAmount = inputView.inputPurchaseAmount();
         service.validatePurchaseAmount(purchaseAmount);
 
         var purchaseType = inputView.inputPurchaseType();
+        service.validatePurchaseType(purchaseType);
+
         var issuedLottoNumbers: List<Lotto>? = null;
 
         if (purchaseType == 1) {

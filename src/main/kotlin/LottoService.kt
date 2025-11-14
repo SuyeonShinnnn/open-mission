@@ -7,6 +7,12 @@ class LottoService {
         }
     }
 
+    fun validatePurchaseType(type: Int) {
+        if(type != 1 || type != 2) {
+            throw IllegalArgumentException("[ERROR] 수동 발금은 숫자 1을, 자동 발급은 숫자 2를 입력해 주세요.");
+        }
+    }
+
     fun parseInput(input: String): Lotto {
         return Lotto(
             input.split(",")
