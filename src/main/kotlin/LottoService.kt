@@ -1,6 +1,12 @@
 package org.example
 
 class LottoService {
+    fun validatePurchaseAmount(amount: Int) {
+        if (amount % 5000 != 0) {
+            throw IllegalArgumentException("[ERROR] 로또는 5,000원 단위로 구매 가능합니다.");
+        }
+    }
+
     fun parseInput(input: String): Lotto {
         return Lotto(
             input.split(",")
