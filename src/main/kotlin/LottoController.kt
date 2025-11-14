@@ -8,11 +8,8 @@ class LottoController() {
     fun runLotto() {
         outputView.welcomeMessageOutput();
 
-        var purchaseAmount = inputView.inputPurchaseAmount();
-        service.validatePurchaseAmount(purchaseAmount);
-
-        var purchaseType = inputView.inputPurchaseType();
-        service.validatePurchaseType(purchaseType);
+        var purchaseAmount = readPurchaseAmount();
+        var purchaseType = readPurchaseType();
 
         var issuedLottoNumbers: List<Lotto>? = null;
 
@@ -32,6 +29,30 @@ class LottoController() {
         if (issuedLottoNumbers != null) {
             var result = service.matchNumbers(issuedLottoNumbers, winningNumber, bonusNumber);
             outputView.outputResult(result);
+        }
+    }
+
+    private fun readPurchaseAmount(): Int {
+        while (true) {
+            try {
+                val purchaseAmount = inputView.inputPurchaseAmount();
+                service.validatePurchaseAmount(purchaseAmount);
+                return purchaseAmount;
+            } catch (e: IllegalArgumentException) {
+                println(e.message);
+            }
+        }
+    }
+
+    private fun readPurchaseType(): Int {
+        while (true) {
+            try {
+                var purchaseType = inputView.inputPurchaseType();
+                service.validatePurchaseType(purchaseType);
+                return purchaseType;
+            } catch (e: IllegalArgumentException) {
+                println(e.message);
+            }
         }
     }
 
