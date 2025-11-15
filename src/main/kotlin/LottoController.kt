@@ -34,25 +34,27 @@ class LottoController() {
 
     private fun readPurchaseAmount(): Int {
         while (true) {
-            try {
+            val result = kotlin.runCatching {
                 val purchaseAmount = inputView.inputPurchaseAmount();
                 service.validatePurchaseAmount(purchaseAmount);
-                return purchaseAmount;
-            } catch (e: IllegalArgumentException) {
+                purchaseAmount
+            }.onFailure { e ->
                 println(e.message);
             }
+            result.getOrNull()?.let { return it }
         }
     }
 
     private fun readPurchaseType(): Int {
         while (true) {
-            try {
-                var purchaseType = inputView.inputPurchaseType();
-                service.validatePurchaseType(purchaseType);
-                return purchaseType;
-            } catch (e: IllegalArgumentException) {
-                println(e.message);
+            val result = runCatching {
+                val purchaseType = inputView.inputPurchaseType()
+                service.validatePurchaseType(purchaseType)
+                purchaseType
+            }.onFailure { e ->
+                println(e.message)
             }
+            result.getOrNull()?.let { return it }
         }
     }
 
@@ -60,16 +62,16 @@ class LottoController() {
         var issuedLottoNumbers = mutableListOf<Lotto>();
         var i = 1;
         while (i <= purchaseAmount / 5000) {
-            try {
-                var inputLottoNumbers = inputView.inputManualLottoNumbers(i);
-                val parsedInputLottoNumbers = service.parseInput(inputLottoNumbers);
-                issuedLottoNumbers.add(parsedInputLottoNumbers);
-                i++;
-            } catch (e: IllegalArgumentException) {
-                println(e.message);
+            val result = runCatching {
+                val inputLottoNumbers = inputView.inputManualLottoNumbers(i)
+                val parsed = service.parseInput(inputLottoNumbers)
+                issuedLottoNumbers.add(parsed)
+                i++
+            }.onFailure { e ->
+                println(e.message)
             }
         }
-        return issuedLottoNumbers;
+        return issuedLottoNumbers
     }
 
     fun autoIssue(purchaseAmount: Int): List<Lotto> {
