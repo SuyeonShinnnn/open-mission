@@ -11,6 +11,15 @@ class LottoOutputView {
         println();
     }
 
+    fun printIssueTitle(type: Int) {
+        if(type == 1) {
+            println("\n** 로또 번호를 수동으로 발급합니다 **");
+            println("번호를 입력해 주세요. (예: 1, 2, 3, 4, 5, 6)");
+        } else if(type == 2) {
+            println("\n** 로또 번호를 자동으로 발급합니다 **");
+        }
+    }
+
     fun outputWinningNumber(winningNumber: Lotto, bonusNumber: Int) {
         println("\n당첨번호🍀");
         println("${winningNumber.getNumbers()} + $bonusNumber")

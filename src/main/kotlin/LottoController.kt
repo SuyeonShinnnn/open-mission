@@ -13,9 +13,8 @@ class LottoController() {
 
         var issuedLottoNumbers: List<Lotto>? = null;
 
+        outputView.printIssueTitle(purchaseType);
         if (purchaseType == 1) {
-            println("\n** 로또 번호를 수동으로 발급합니다 **");
-            println("번호를 입력해 주세요. (예: 1, 2, 3, 4, 5, 6)");
             issuedLottoNumbers = manualIssue(purchaseAmount);
         } else if (purchaseType == 2) {
             issuedLottoNumbers = autoIssue(purchaseAmount);
