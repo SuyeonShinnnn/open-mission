@@ -16,9 +16,8 @@ class LottoService {
     fun parseInput(input: String): Lotto {
         return Lotto(
             input.split(",")
-                .map { it.trim() }
-                .mapNotNull { it.toIntOrNull() }
-        );
+                .map { it.trim().toInt() }
+        )
     }
 
     fun generateLottoNumbers(): Lotto {

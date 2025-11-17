@@ -67,7 +67,7 @@ class LottoController() {
                 issuedLottoNumbers.add(parsed)
                 i++
             }.onFailure { e ->
-                println(e.message)
+                ExceptionHandler.handleException(e)
             }
         }
         return issuedLottoNumbers
