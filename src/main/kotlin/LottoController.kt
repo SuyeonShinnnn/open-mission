@@ -38,7 +38,7 @@ class LottoController() {
                 service.validatePurchaseAmount(purchaseAmount);
                 purchaseAmount
             }.onFailure { e ->
-                println(e.message);
+                ExceptionHandler.handleException(e)
             }
             result.getOrNull()?.let { return it }
         }
@@ -51,7 +51,7 @@ class LottoController() {
                 service.validatePurchaseType(purchaseType)
                 purchaseType
             }.onFailure { e ->
-                println(e.message)
+                ExceptionHandler.handleException(e)
             }
             result.getOrNull()?.let { return it }
         }
