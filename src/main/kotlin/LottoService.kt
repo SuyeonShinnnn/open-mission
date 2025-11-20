@@ -5,6 +5,9 @@ class LottoService {
         if (amount % 5000 != 0) {
             throw IllegalArgumentException("[ERROR] 로또는 5,000원 단위로 구매 가능합니다.");
         }
+        if (amount < 5000) {
+            throw IllegalArgumentException("[ERROR] 5000원부터 구입 가능합니다.")
+        }
     }
 
     fun validatePurchaseType(type: Int) {
