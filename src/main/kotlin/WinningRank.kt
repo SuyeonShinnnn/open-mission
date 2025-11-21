@@ -15,13 +15,12 @@ enum class WinningRank(
     companion object {
         fun valueOf(matchCount: Int, hasBonus: Boolean): WinningRank? {
             return when {
-                matchCount == 6 -> FIRST
+                matchCount == 6 && !hasBonus -> FIRST
                 matchCount == 5 && hasBonus -> SECOND
-                matchCount == 5 -> THIRD
-                matchCount == 4 -> FOURTH
-                matchCount == 3 -> FIFTH
+                matchCount == 5 && !hasBonus -> THIRD
+                matchCount == 4 && !hasBonus -> FOURTH
+                matchCount == 3 && !hasBonus -> FIFTH
                 else -> null
-
             }
         }
     }
