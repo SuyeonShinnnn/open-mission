@@ -60,20 +60,16 @@ class LottoService {
         purchaseAmount: Int
     ): WinningResult {
 
-        // 1) 등수별 당첨 로또 목록 만들기
         val winningTickets = matchNumbers(issuedLottoNumbers, winningNumbers, bonusNumber)
 
-        // 2) 총 수령금 계산
         val totalReward = winningTickets.entries.sumOf { (rank, tickets) ->
             rank.reward * tickets.size
         }
 
-        // 3) 수익률 계산
         val revenueRate =
             if (purchaseAmount == 0) 0.0
             else (totalReward.toDouble() / purchaseAmount) * 100
 
-        // 4) 결과 DTO 반환
         return WinningResult(
             totalReward = totalReward,
             revenueRate = revenueRate,
