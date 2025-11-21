@@ -35,21 +35,20 @@ class LottoService {
 
     fun matchNumbers(
         issuedLottoNumbers: List<Lotto>, winningNumbers: Lotto, bonusNumber: Int
-    ): Map<WinningRank, Int> {
+    ): Map<WinningRank, MutableList<Lotto>> {
 
-        val resultMap = mutableMapOf<WinningRank, Int>()
+        val resultMap = mutableMapOf<WinningRank, MutableList<Lotto>>()
 
         for (issued in issuedLottoNumbers) {
             val matchCount = issued.getNumbers().count { it in winningNumbers.getNumbers() }
             val hasBonus = bonusNumber in issued.getNumbers()
-
             val rank = WinningRank.valueOf(matchCount, hasBonus)
 
             if (rank != null) {
-                resultMap[rank] = resultMap.getOrDefault(rank, 0) + 1
+                resultMap.getOrPut(rank) { mutableListOf() }
+                    .add(issued)
             }
         }
-
         return resultMap
     }
 }

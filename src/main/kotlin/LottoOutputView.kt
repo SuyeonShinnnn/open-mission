@@ -32,19 +32,18 @@ class LottoOutputView {
         };
     }
 
-    fun outputResult(result: Map<WinningRank, Int>) {
-        println("\n당첨 통계")
-        println("----------")
+    fun outputResult(result: Map<WinningRank, List<Lotto>>) {
+        println("\n당첨 결과🏆")
+        println("-----------")
 
-        val formatter = NumberFormat.getNumberInstance(Locale.KOREA)
-        val sorted = result.toSortedMap(compareBy { it.ordinal })
+        val sortedResult = result.toSortedMap(compareBy { it.matchCount })  // 낮은 등수부터
 
-        for (rank in WinningRank.values().reversed()) {
-            val count = sorted.getOrDefault(rank, 0)
-            val bonusText = if (rank.bonus) ", 보너스 볼 일치" else ""
-            val rewardText = formatter.format(rank.reward)
-
-            println("${rank.matchCount}개 일치$bonusText (${rewardText}원) - ${count}개")
+        for ((rank, lottoList) in sortedResult) {
+            println("${rank.rank}등 당첨")
+            for (lotto in lottoList) {
+                println("당첨된 로또: ${lotto.getNumbers()}")
+            }
+            println("-----------")
         }
     }
 }
