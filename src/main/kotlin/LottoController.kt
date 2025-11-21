@@ -18,7 +18,7 @@ class LottoController() {
         var winningNumber = service.generateLottoNumbers();
         var bonusNumber = service.generateBonusNumber(winningNumber);
 
-        getLottoResult(winningNumber, bonusNumber, issuedLottoNumbers);
+        getLottoResult(winningNumber, bonusNumber, issuedLottoNumbers, purchaseAmount);
     }
 
     private fun readPurchaseAmount(): Int {
@@ -76,12 +76,13 @@ class LottoController() {
         return issuedLottoNumbers;
     }
 
-    fun getLottoResult(winningNumber: Lotto, bonusNumber: Int, issuedLottoNumbers: List<Lotto>) {
+    fun getLottoResult(winningNumber: Lotto, bonusNumber: Int, issuedLottoNumbers: List<Lotto>, purchaseAmount: Int) {
         outputView.outputWinningNumber(winningNumber, bonusNumber);
 
         if (issuedLottoNumbers != null) {
-            var result = service.matchNumbers(issuedLottoNumbers, winningNumber, bonusNumber);
+            var result = service.getLottoResult(issuedLottoNumbers, winningNumber, bonusNumber, purchaseAmount);
             outputView.outputResult(result);
+            return;
         }
     }
 }

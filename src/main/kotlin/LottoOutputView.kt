@@ -12,10 +12,10 @@ class LottoOutputView {
     }
 
     fun printIssueTitle(type: Int) {
-        if(type == 1) {
+        if (type == 1) {
             println("\n** 로또 번호를 수동으로 발급합니다 **");
             println("번호를 입력해 주세요. (예: 1, 2, 3, 4, 5, 6)");
-        } else if(type == 2) {
+        } else if (type == 2) {
             println("\n** 로또 번호를 자동으로 발급합니다 **");
         }
     }
@@ -32,18 +32,30 @@ class LottoOutputView {
         };
     }
 
-    fun outputResult(result: Map<WinningRank, List<Lotto>>) {
+    fun outputResult(result: WinningResult) {
         println("\n당첨 결과🏆")
         println("-----------")
 
-        val sortedResult = result.toSortedMap(compareBy { it.matchCount })  // 낮은 등수부터
+        outputWonNumbers(result)
 
-        for ((rank, lottoList) in sortedResult) {
+        println("-----------")
+        println("총 ${"%,d".format(result.totalReward)}원 수령")
+        println("수익률: ${"%,.2f".format(result.revenueRate)}%")
+    }
+
+    fun outputWonNumbers(result: WinningResult) {
+        if (result.winningTickets.isEmpty()) {
+            return println("당첨된 로또가 없습니다.")
+        }
+        val sortedRanks = WinningRank.values().sortedBy { it.reward }.reversed()
+
+        for (rank in sortedRanks) {
+            val tickets = result.winningTickets[rank] ?: continue
+
             println("${rank.rank}등 당첨")
-            for (lotto in lottoList) {
-                println("당첨된 로또: ${lotto.getNumbers()}")
+            for (ticket in tickets) {
+                println("당첨된 로또: ${ticket.getNumbers()}")
             }
-            println("-----------")
         }
     }
 }
