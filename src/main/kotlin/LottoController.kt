@@ -11,24 +11,14 @@ class LottoController() {
         var purchaseAmount = readPurchaseAmount();
         var purchaseType = readPurchaseType();
 
-        var issuedLottoNumbers: List<Lotto>? = null;
-
         outputView.printIssueTitle(purchaseType);
-        if (purchaseType == 1) {
-            issuedLottoNumbers = manualIssue(purchaseAmount);
-        } else if (purchaseType == 2) {
-            issuedLottoNumbers = autoIssue(purchaseAmount);
-        }
+        var issuedLottoNumbers: List<Lotto> = issueLottoNumbers(purchaseAmount, purchaseType);
+
         outputView.outputIssuedLottoNumbers(issuedLottoNumbers);
         var winningNumber = service.generateLottoNumbers();
         var bonusNumber = service.generateBonusNumber(winningNumber);
-        outputView.outputWinningNumber(winningNumber, bonusNumber);
 
-
-        if (issuedLottoNumbers != null) {
-            var result = service.matchNumbers(issuedLottoNumbers, winningNumber, bonusNumber);
-            outputView.outputResult(result);
-        }
+        getLottoResult(winningNumber, bonusNumber, issuedLottoNumbers, purchaseAmount);
     }
 
     private fun readPurchaseAmount(): Int {
@@ -57,6 +47,11 @@ class LottoController() {
         }
     }
 
+    private fun issueLottoNumbers(purchaseAmount: Int, purchaseType: Int): List<Lotto> {
+        if (purchaseType == 1) return manualIssue(purchaseAmount)
+        return autoIssue(purchaseAmount)
+    }
+
     fun manualIssue(purchaseAmount: Int): List<Lotto> {
         var issuedLottoNumbers = mutableListOf<Lotto>();
         var i = 1;
@@ -79,5 +74,15 @@ class LottoController() {
             issuedLottoNumbers.add(service.generateLottoNumbers());
         }
         return issuedLottoNumbers;
+    }
+
+    fun getLottoResult(winningNumber: Lotto, bonusNumber: Int, issuedLottoNumbers: List<Lotto>, purchaseAmount: Int) {
+        outputView.outputWinningNumber(winningNumber, bonusNumber);
+
+        if (issuedLottoNumbers != null) {
+            var result = service.getLottoResult(issuedLottoNumbers, winningNumber, bonusNumber, purchaseAmount);
+            outputView.outputResult(result);
+            return;
+        }
     }
 }
