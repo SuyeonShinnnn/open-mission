@@ -2,17 +2,14 @@ package org.example
 
 class LottoService {
     fun validatePurchaseAmount(amount: Int) {
-        if (amount % 5000 != 0) {
-            throw IllegalArgumentException("[ERROR] 로또는 5,000원 단위로 구매 가능합니다.");
-        }
-        if (amount < 5000) {
-            throw IllegalArgumentException("[ERROR] 5000원부터 구입 가능합니다.")
+        if (amount % 5000 != 0 || amount < 5000) {
+            throw IllegalArgumentException(ErrorMessage.INVALID_AMOUNT_INPUT.message);
         }
     }
 
     fun validatePurchaseType(type: Int) {
         if (type != 1 && type != 2) {
-            throw IllegalArgumentException("[ERROR] 수동 발급은 숫자 1을, 자동 발급은 숫자 2를 입력해 주세요.");
+            throw IllegalArgumentException(ErrorMessage.INVALID_TYPE_INPUT.message);
         }
     }
 
