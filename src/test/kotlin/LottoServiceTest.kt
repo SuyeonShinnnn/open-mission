@@ -82,4 +82,13 @@ class LottoServiceTest {
             service.parseInput("1, 2, 3, 4, 5, 6")
         }
     }
+
+    @Test
+    fun `로또 번호 자동 생성 테스트`() {
+        val lotto = service.generateLottoNumbers()
+
+        assertEquals(6, lotto.getNumbers().size)
+        assertTrue(lotto.getNumbers().all { it in 1..45 })
+        assertEquals(lotto.getNumbers().size, lotto.getNumbers().toSet().size)
+    }
 }
