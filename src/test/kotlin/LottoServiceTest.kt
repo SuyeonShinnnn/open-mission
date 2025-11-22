@@ -1,6 +1,4 @@
-import org.example.ErrorMessage
-import org.example.ExceptionHandler
-import org.example.LottoService
+import org.example.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -90,5 +88,27 @@ class LottoServiceTest {
         assertEquals(6, lotto.getNumbers().size)
         assertTrue(lotto.getNumbers().all { it in 1..45 })
         assertEquals(lotto.getNumbers().size, lotto.getNumbers().toSet().size)
+    }
+
+    @Test
+    fun `보너스 번호는 당첨 번호와 겹칠 수 없음`() {
+        val winning = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val bonus = service.generateBonusNumber(winning)
+
+        assertFalse(winning.getNumbers().contains(bonus))
+    }
+
+    @Test
+    fun `로또 등수 계산`() {
+        val issued = listOf(
+            Lotto(listOf(1, 2, 3, 4, 5, 6)),  // 1등
+            Lotto(listOf(1, 2, 3, 4, 5, 7))   // 2등
+        )
+        val winning = Lotto(listOf(1, 2, 3, 4, 5, 6))
+        val bonus = 7
+        val map = service.matchNumbers(issued, winning, bonus)
+
+        assertEquals(1, map[WinningRank.FIRST]?.size)
+        assertEquals(1, map[WinningRank.SECOND]?.size)
     }
 }
