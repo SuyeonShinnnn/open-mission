@@ -30,4 +30,25 @@ class LottoServiceTest {
             service.validatePurchaseAmount(10000)
         }
     }
+
+    @Test
+    fun `구매 타입이 1또는 2가 아닐 때 예외 발생`() {
+        assertThrows<IllegalArgumentException> {
+            service.validatePurchaseType(3)
+        }
+    }
+
+    @Test
+    fun `구매 타입이 1일 때 정상 실행`() {
+        assertDoesNotThrow {
+            service.validatePurchaseType(1)
+        }
+    }
+
+    @Test
+    fun `구매 타입이 2일 때 정상 실행`() {
+        assertDoesNotThrow {
+            service.validatePurchaseType(2)
+        }
+    }
 }
