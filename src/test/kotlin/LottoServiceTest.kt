@@ -111,4 +111,21 @@ class LottoServiceTest {
         assertEquals(1, map[WinningRank.FIRST]?.size)
         assertEquals(1, map[WinningRank.SECOND]?.size)
     }
+
+    @Test
+    fun `총 상금 및 수익률 계산`() {
+        val issued = listOf(
+            Lotto(listOf(1,2,3,4,5,6))
+        )
+        val winning = Lotto(listOf(1,2,3,4,5,6))
+        val bonus = 7
+        val result = service.getLottoResult(
+            issued,
+            winning,
+            bonus,
+            purchaseAmount = 5000
+        )
+        assertEquals(2_000_000_000, result.totalReward)
+        assertEquals( (2_000_000_000.0 / 5000) * 100, result.revenueRate )
+    }
 }
