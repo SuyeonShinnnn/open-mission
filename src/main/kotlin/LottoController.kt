@@ -56,7 +56,7 @@ class LottoController() {
         var issuedLottoNumbers = mutableListOf<Lotto>();
         var i = 1;
         while (i <= purchaseAmount / 5000) {
-            val result = runCatching {
+            runCatching {
                 val inputLottoNumbers = inputView.inputManualLottoNumbers(i)
                 val parsed = service.parseInput(inputLottoNumbers)
                 issuedLottoNumbers.add(parsed)
