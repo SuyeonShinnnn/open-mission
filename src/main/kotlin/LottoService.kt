@@ -30,6 +30,16 @@ class LottoService {
         return candidates.random()
     }
 
+    fun validateBonusNumber(bonusNumber: Int, winningNumbers: Lotto) {
+        if (bonusNumber < 1 || bonusNumber > 45) {
+            throw IllegalArgumentException(ErrorMessage.INVALID_RANGE.message)
+        }
+
+        if (bonusNumber in winningNumbers.getNumbers()) {
+            throw IllegalArgumentException(ErrorMessage.INVALID_BONUS_NUMBER.message)
+        }
+    }
+
     fun matchNumbers(
         issuedLottoNumbers: List<Lotto>,
         winningNumbers: Lotto,

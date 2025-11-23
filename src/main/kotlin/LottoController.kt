@@ -15,8 +15,8 @@ class LottoController() {
         var issuedLottoNumbers: List<Lotto> = issueLottoNumbers(purchaseAmount, purchaseType);
 
         outputView.outputIssuedLottoNumbers(issuedLottoNumbers);
-        var winningNumber = service.generateLottoNumbers();
-        var bonusNumber = service.generateBonusNumber(winningNumber);
+        var winningNumber = generateValidWinningNumber();
+        var bonusNumber = generateBonusNumber(winningNumber);
 
         getLottoResult(winningNumber, bonusNumber, issuedLottoNumbers, purchaseAmount);
     }
@@ -56,7 +56,7 @@ class LottoController() {
         var issuedLottoNumbers = mutableListOf<Lotto>();
         var i = 1;
         while (i <= purchaseAmount / 5000) {
-            val result = runCatching {
+            runCatching {
                 val inputLottoNumbers = inputView.inputManualLottoNumbers(i)
                 val parsed = service.parseInput(inputLottoNumbers)
                 issuedLottoNumbers.add(parsed)
@@ -74,6 +74,28 @@ class LottoController() {
             issuedLottoNumbers.add(service.generateLottoNumbers());
         }
         return issuedLottoNumbers;
+    }
+
+    private fun generateValidWinningNumber(): Lotto {
+        while (true) {
+            kotlin.runCatching {
+                return service.generateLottoNumbers()
+            }.onFailure { e ->
+                ExceptionHandler.handleException(e)
+            }
+        }
+    }
+
+    private fun generateBonusNumber(winningNumber: Lotto): Int {
+        while (true) {
+            kotlin.runCatching {
+                val bonusNum = service.generateBonusNumber(winningNumber)
+                service.validateBonusNumber(bonusNum, winningNumber)
+                return bonusNum
+            }.onFailure { e ->
+                ExceptionHandler.handleException(e);
+            }
+        }
     }
 
     fun getLottoResult(winningNumber: Lotto, bonusNumber: Int, issuedLottoNumbers: List<Lotto>, purchaseAmount: Int) {
